@@ -1,6 +1,15 @@
 import './index.css';
 
 import {getUsers, deleteUser} from './api/userApi';
+import {getSayIt} from './api/baseApi';
+
+
+getSayIt().then(result => {
+  global.document.getElementById('sayItBtn').onclick();
+  console.log(result)
+}
+
+)
 
 // Populate table of users via API call.
 getUsers().then(result => {

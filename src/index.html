@@ -19,11 +19,31 @@
     <!-- BEGIN TRACKJS -->
     <script type="text/javascript">window._trackJs = { token: '<%=htmlWebpackPlugin.options.trackJSToken%>' };</script>
     <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
+    
     <!-- END TRACKJS -->
     <% } %>
   <meta charset="UTF-8">
+
+  <script>
+    function UserAction(callback) {
+    var sayWhat = document.getElementById('sayitInputTb').value;
+    console.log(sayWhat);
+    var xobj = new XMLHttpRequest();
+                  // true parameter denotes asynchronous
+    xobj.open('GET', "http://localhost:5005/sayall/" + sayWhat, true);
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // This marks that the response has been successfully retrieved from the server
+            // Utilize callback
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);
+    }
+  </script>
+
 </head>
-<body>
+<!-- <body>
   <h1>Users</h1>
   <table>
     <thead>
@@ -37,5 +57,38 @@
 
     </tbody>
   </table>
-</body>
+</body> -->
+
+  <body>
+    <div><h1>Dev</h1></div>
+    <button hidden="true" type="button">TV Room</button></br>
+    <a href="http://localhost:5005/preset/currentlylearning">Currently Learning</a></br>
+    <a href="http://localhost:5005/preset/bedroom-noisetherapy">bedroom-noisetherapy</a></br>
+    <a href="http://localhost:5005/preset/deepfocus">deepfocus</a></br>
+    <a href="http://localhost:5005/preset/tronlegacy">tronlegacy</a></br>
+    <a href="http://localhost:5005/preset/office-output">office-output</a></br>
+    <a href="http://localhost:5005/preset/office-only-output">office-only-output</a></br>
+    <a href="http://localhost:5005/preset/tvroom-output">tvroom-output</a></br>
+
+    <div><h2>Say It!</h2></div>
+    <input id="sayitInputTb" type="text">
+    <button id="sayItBtn" type="submit" onclick="UserAction()">Say it!</button></br>
+    
+    
+    <div><h1>Prod (rpi3)</h1></div>
+   
+    <button hidden="false" type="button">TV Room</button></br>
+    <a href="http://rpi3:5005/preset/morning">morning</a></br>
+    <a href="http://rpi3:5005/preset/bedroom-noisetherapy">bedroom-noisetherapy</a></br>
+    <a href="http://rpi3:5005/preset/deepfocus">deepfocus</a></br>
+    <a href="http://rpi3:5005/preset/tronlegacy">tronlegacy</a></br>
+    <a href="http://rpi3:5005/preset/office-output">office-output</a></br>
+    <a href="http://rpi3:5005/preset/tvroom-output">tvroom-output</a></br>
+
+    <div><h2>Say It!</h2></div>
+    <input id="sayitInputTb" type="text">
+    <button id="sayItBtn" type="submit" onclick="UserAction()">Say it!</button></br>
+
+
+  </body>
 </html>
