@@ -5,3 +5,18 @@ body {
 table th {
   padding: 5px
 }
+hr {
+  display: block;
+  position: relative;
+  padding: 10;
+  margin: 8px auto;
+  height: 100;
+  width: 100%;
+  max-height: 0;
+  font-size: 1px;
+  line-height: 10;
+  clear: both;
+  border: none;
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #ffffff;
+}

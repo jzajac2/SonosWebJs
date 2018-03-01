@@ -8,87 +8,89 @@
   For examples of using it with htmlWebpackPlugin,
   see https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
   -->
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!--
+  <!--
     The htmlWebpackPlugin will parse the logic below so that trackJS is only added to the production version of index.html (since only webpack.config.prod.js provides the trackJS token)
     This is an example of how to add features to index.html for only one environment.
    -->
-    <% if (htmlWebpackPlugin.options.trackJSToken) { %>
+  <% if (htmlWebpackPlugin.options.trackJSToken) { %>
     <!-- BEGIN TRACKJS -->
     <script type="text/javascript">window._trackJs = { token: '<%=htmlWebpackPlugin.options.trackJSToken%>' };</script>
     <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
-    
+
     <!-- END TRACKJS -->
     <% } %>
-  <meta charset="UTF-8">
+      <meta charset="UTF-8">
 
-  <script>
-    function UserAction(callback) {
-    var sayWhat = document.getElementById('sayitInputTb').value;
-    console.log(sayWhat);
-    var xobj = new XMLHttpRequest();
-                  // true parameter denotes asynchronous
-    xobj.open('GET', "http://localhost:5005/sayall/" + sayWhat, true);
-    xobj.onreadystatechange = function () {
-          if (xobj.readyState == 4 && xobj.status == "200") {
-            // This marks that the response has been successfully retrieved from the server
-            // Utilize callback
-            callback(xobj.responseText);
+      <script>
+        function userAction(resourcePath) {
+          if (window.location.host.includes("localhost")) {
+            console.log('in');
+            environmentUrl = "http://localhost:5005"
           }
-    };
-    xobj.send(null);
-    }
-  </script>
+          else {
+            environmentUrl = 'http://rpi3:5005'
+          }
 
+          var xobj = new XMLHttpRequest();
+          // true parameter denotes asynchronous
+          xobj.open('GET', environmentUrl + "/" + resourcePath, true);
+          xobj.onreadystatechange = function () {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+              // This marks that the response has been successfully retrieved from the server
+              // Utilize callback
+              callback(xobj.responseText);
+            }
+          };
+          xobj.send(null);
+        }
+
+        function sayIt(environmentUrl) {
+          var sayWhat = document.getElementById('sayItInputTbProd').value;
+          resourceString = 'sayall' + '/' + sayWhat;
+          userAction(resourceString)
+        }
+      </script>
 </head>
-<!-- <body>
-  <h1>Users</h1>
-  <table>
-    <thead>
-      <th>&nbsp;</th>
-      <th>Id</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-    </thead>
-    <tbody id="users">
 
-    </tbody>
-  </table>
-</body> -->
+<body>
+  <div>
+    <h1>Music Presets</h1>
+  </div>
+  <button hidden="true" type="button">TV Room</button>
+  </br>
+  <button id="currentlyLearningBtn" type="submit" onclick="userAction('preset/currentlylearning')">Currently Learning</button>
+  </br>
+  <button id="noiseTherapyBtn" type="submit" onclick="userAction('preset/bedroom-noisetherapy')">bedroom-noisetherapy</button>
+  </br>
+  <button id="deepFocusBtn" type="submit" onclick="userAction('preset/deepfocus')">deepfocus</button>
+  </br>
+  <button id="tronlegacyBtn" type="submit" onclick="userAction('preset/tronlegacy')">tronlegacy</button>
+  </br>
+  <button id="beatsBtn" type="submit" onclick="userAction('preset/beats')">beats</button>
+  </br>
 
-  <body>
-    <div><h1>Dev</h1></div>
-    <button hidden="true" type="button">TV Room</button></br>
-    <a href="http://localhost:5005/preset/currentlylearning">Currently Learning</a></br>
-    <a href="http://localhost:5005/preset/bedroom-noisetherapy">bedroom-noisetherapy</a></br>
-    <a href="http://localhost:5005/preset/deepfocus">deepfocus</a></br>
-    <a href="http://localhost:5005/preset/tronlegacy">tronlegacy</a></br>
-    <a href="http://localhost:5005/preset/office-output">office-output</a></br>
-    <a href="http://localhost:5005/preset/office-only-output">office-only-output</a></br>
-    <a href="http://localhost:5005/preset/tvroom-output">tvroom-output</a></br>
+  <div>
+    <h1>Input / Output Sources</h1>
+  </div>
+  <button id="officeOutputBtn" type="submit" onclick="userAction('preset/office-output')">office-output</button>
+  </br>
+  <button id="officeOnlyOutputBtn" type="submit" onclick="userAction('preset/office-only-output')">office-only-output</button>
+  </br>
+  <button id="tvroomOutputBtn" type="submit" onclick="userAction('preset/tvroom-output')">tvroom-output</button>
+  </br>
+  <button id="tvroomOnlyOutputBtn" type="submit" onclick="userAction('preset/tvroom-only-output')">tvroom-only-output</button>
+  </br>
 
-    <div><h2>Say It!</h2></div>
-    <input id="sayitInputTb" type="text">
-    <button id="sayItBtn" type="submit" onclick="UserAction()">Say it!</button></br>
-    
-    
-    <div><h1>Prod (rpi3)</h1></div>
-   
-    <button hidden="false" type="button">TV Room</button></br>
-    <a href="http://rpi3:5005/preset/morning">morning</a></br>
-    <a href="http://rpi3:5005/preset/bedroom-noisetherapy">bedroom-noisetherapy</a></br>
-    <a href="http://rpi3:5005/preset/deepfocus">deepfocus</a></br>
-    <a href="http://rpi3:5005/preset/tronlegacy">tronlegacy</a></br>
-    <a href="http://rpi3:5005/preset/office-output">office-output</a></br>
-    <a href="http://rpi3:5005/preset/tvroom-output">tvroom-output</a></br>
+  <div>
+    <h1>Say It!</h1>
+  </div>
+  <input id="sayItInputTbProd" type="text">
+  <button id="sayItBtnDev" type="submit" onclick="sayIt('http://localhost:5005')">Say it!</button>
+</body>
+<!-- <script type="text/javascript" src="index.js"></script> -->
 
-    <div><h2>Say It!</h2></div>
-    <input id="sayitInputTb" type="text">
-    <button id="sayItBtn" type="submit" onclick="UserAction()">Say it!</button></br>
-
-
-  </body>
 </html>
