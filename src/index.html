@@ -1,13 +1,3 @@
-<!--
-  **NOTE:** This is a template for index.html.
-  It uses ejs and htmlWebpackPlugin to generate a different index.html for each environment.
-  htmlWebpackPlugin will dynamically add references to the scripts and styles that it bundles
-  to this file. The generated bundles have hash-based filenames,
-  so it's necessary to add the references dynamically.
-  For more info on ejs, see http://www.embeddedjs.com/.
-  For examples of using it with htmlWebpackPlugin,
-  see https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
-  -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,9 +14,9 @@
     <!-- END TRACKJS -->
     <% } %>
       <meta charset="UTF-8">
-
+      <script type="text/javascript" src="index.js"></script>
       <script>
-        function userAction(resourcePath) {
+        function requestResource(resourcePath) {
           if (window.location.host.includes("localhost")) {
             console.log('in');
             environmentUrl = "http://localhost:5005"
@@ -51,7 +41,7 @@
         function sayIt(environmentUrl) {
           var sayWhat = document.getElementById('sayItInputTbProd').value;
           resourceString = 'sayall' + '/' + sayWhat;
-          userAction(resourceString)
+          requestResource(resourceString)
         }
       </script>
 </head>
@@ -62,27 +52,40 @@
   </div>
   <button hidden="true" type="button">TV Room</button>
   </br>
-  <button id="currentlyLearningBtn" type="submit" onclick="userAction('preset/currentlylearning')">Currently Learning</button>
+  <button id="currentlyLearningBtn" type="submit" onclick="requestResource('preset/currentlylearning')">Currently Learning</button>
   </br>
-  <button id="noiseTherapyBtn" type="submit" onclick="userAction('preset/bedroom-noisetherapy')">bedroom-noisetherapy</button>
+  <button id="noiseTherapyBtn" type="submit" onclick="requestResource('preset/bedroom-only-noisetherapy')">bedroom-noisetherapy</button>
   </br>
-  <button id="deepFocusBtn" type="submit" onclick="userAction('preset/deepfocus')">deepfocus</button>
+  <button id="sleepBtn" type="submit" onclick="requestResource('preset/bedroom-only-sleep')">bedroom-only-sleep</button>
   </br>
-  <button id="tronlegacyBtn" type="submit" onclick="userAction('preset/tronlegacy')">tronlegacy</button>
+  <button id="deepFocusBtn" type="submit" onclick="requestResource('preset/deepfocus')">deepfocus</button>
   </br>
-  <button id="beatsBtn" type="submit" onclick="userAction('preset/beats')">beats</button>
+  <button id="tronlegacyBtn" type="submit" onclick="requestResource('preset/tronlegacy')">tronlegacy</button>
   </br>
+  <button id="beatsBtn" type="submit" onclick="requestResource('preset/beats')">beats</button>
+  </br>
+  <button id="fooFighersBtn" type="submit" onclick="requestResource('preset/foo-fighters')">foo-fighers</button>
+  </br>
+  <button id="tonalRecallSetListBtn" type="submit" onclick="requestResource('preset/tonal-recall-set-list')">Tonal Recall Set List</button>
+  </br>
+  <button id="duranDuranBtn" type="submit" onclick="requestResource('preset/duran-duran')">Duran Duran</button>
+  </br>
+  <button id="flowBtn" type="submit" onclick="requestResource('preset/flow')">Flow</button>
+  </br>
+  <button id="dotNetRocksBtn" type="submit" onclick="requestResource('preset/dotnetrocks')">Dot Net Rocks</button>
+  </br>
+
 
   <div>
     <h1>Input / Output Sources</h1>
   </div>
-  <button id="officeOutputBtn" type="submit" onclick="userAction('preset/office-output')">office-output</button>
+  <button id="officeOutputBtn" type="submit" onclick="requestResource('preset/office-output')">office-output</button>
   </br>
-  <button id="officeOnlyOutputBtn" type="submit" onclick="userAction('preset/office-only-output')">office-only-output</button>
+  <button id="officeOnlyOutputBtn" type="submit" onclick="requestResource('preset/office-only-output')">office-only-output</button>
   </br>
-  <button id="tvroomOutputBtn" type="submit" onclick="userAction('preset/tvroom-output')">tvroom-output</button>
+  <button id="tvroomOutputBtn" type="submit" onclick="requestResource('preset/tvroom-output')">tvroom-output</button>
   </br>
-  <button id="tvroomOnlyOutputBtn" type="submit" onclick="userAction('preset/tvroom-only-output')">tvroom-only-output</button>
+  <button id="tvroomOnlyOutputBtn" type="submit" onclick="requestResource('preset/tvroom-only-output')">tvroom-only-output</button>
   </br>
 
   <div>
@@ -91,6 +94,4 @@
   <input id="sayItInputTbProd" type="text">
   <button id="sayItBtnDev" type="submit" onclick="sayIt('http://localhost:5005')">Say it!</button>
 </body>
-<!-- <script type="text/javascript" src="index.js"></script> -->
-
 </html>
