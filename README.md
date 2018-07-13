@@ -1,2 +1,1 @@
-# js-dev-env-demo
-Course demo
+# SonosWebJs - Create your own Sonos expierience!
