@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-const baseUrl = "http://localhost:5005/"; //getBaseUrl();
+const baseUrl = "http://localhost:5005/";
 
 export function getSayIt() {
   return get('sayall/Attention');

@@ -1,29 +1,6 @@
 import './index.css';
 
 import {getUsers, deleteUser} from './api/userApi';
-//mport {getSayIt} from './api/baseApi';
-
-
-// getSayIt().then(result => {
-//   global.document.getElementById('sayItBtn').onclick();
-//   console.log(result)
-// })
-
-
-/* function Get(callback,baseUrl,req) {
-  var sayWhat = document.getElementById('sayitInputTb').value;
-  var xobj = new XMLHttpRequest();
-                // true parameter denotes asynchronous
-  xobj.open('GET', baseUrl + "/" + req,true);
-  xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-          // This marks that the response has been successfully retrieved from the server
-          // Utilize callback
-          callback(xobj.responseText);
-        }
-  };
-  xobj.send(null);
-  } */
 
 // Populate table of users via API call.
 getUsers().then(result => {

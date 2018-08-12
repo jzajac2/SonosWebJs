@@ -1,0 +1,4 @@
+# Starts the services on reboot on rpi. sudo crontab -e
+@reboot sudo /usr/local/bin/node /home/pi/code/node-sonos-http-api/server.js &
+@reboot sudo /usr/local/bin/node /home/pi/code/node-sonos-web-controller/server.js &
+@reboot sudo /usr/local/bin/npm run --prefix /home/pi/code/SonosWebJs open:src &
